@@ -156,3 +156,60 @@ ON (e.emp_no=de.emp_no)
 WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 AND (e.hire_date BETWEEN '1985-01-01' AND '1988-12-31')
 AND (de.to_date = '9999-01-01');
+
+-- List 2: managers per department list with manager emp_no, first_name, last_name, from_date, to_date. Remember to list columns we need for joins
+SELECT dm.dept_no,
+	d.dept_name,
+	dm.emp_no,
+	ce.first_name,
+	ce.last_name,
+	dm.from_date,
+	dm.to_date
+-- INTO manager_info
+FROM dept_manager as dm
+	INNER JOIN departments as d
+		ON (dm.dept_no = d.dept_no)
+	INNER JOIN current_emp as ce
+		ON (dm.emp_no = ce.emp_no);
+
+-- List 3: Department retirees, add departments to current_emp. merge from ce inner join dept_employees on emp_no, then merge from de inner join departments on dept_no
+-- columns we need: emp_no, first_name, last_name, dept_name
+SELECT ce.emp_no,
+ce.first_name,
+ce.last_name,
+d.dept_name
+--INTO dept_info
+FROM current_emp as ce
+	INNER JOIN dept_employees as de
+		ON ce.emp_no = de.emp_no
+	INNER JOIN departments as d
+		ON de.dept_no = d.dept_no ;
+
+-- Skill drill 1: Retirement_info list tailored for sales, includes emp_no, first_name, last_name, dept_no
+-- ri has columns emp_no, first_name, last_name
+-- de has columns emp_no, dept_no, from_date, to_date
+-- d  has columns 
+SELECT ri.emp_no,
+	ri.first_name,
+	ri.last_name,
+	d.dept_name
+-- INTO ri_sales
+FROM retirement_info as ri
+	INNER JOIN dept_employees as de
+		ON ri.emp_no = de.emp_no
+	INNER JOIN departments as d
+		ON de.dept_no = d.dept_no
+WHERE dept_name = 'Sales'
+
+-- Skill drill 2
+SELECT ri.emp_no,
+	ri.first_name,
+	ri.last_name,
+	d.dept_name
+-- INTO ri_sales_development
+FROM retirement_info as ri
+	INNER JOIN dept_employees as de
+		ON ri.emp_no = de.emp_no
+	INNER JOIN departments as d
+		ON de.dept_no = d.dept_no
+WHERE dept_name IN ('Sales', 'Development');		-- IN condition is used to help reduce the need to use multiple OR conditions in a SELECT, INSERT, UPDATE, or DELETE statement.
