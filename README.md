@@ -31,6 +31,65 @@ An employee database of a large company was built from flat-file using SQL and s
 * 1,549 current employees (with birth years as early as 1965) are eligible for the mentorship program.
 
 ## Summary and future directions
-A total of 72,458 employees are eligible for retirement and hence will need to be filled. Of those retirement-eligible, a majority (70% or 50,842 of 72,458) of those employees hold senior-level titles indicating a significant talent depletion as this 'silver tsunami' hits. Based on the suggested criteria, 1965 birth year, for the mentorship program, there are 1,549 current employees ready to mentor the next generation of employees. This is hardly a sufficient number of mentors to replenish the number of employees expected to leave (approximately 1 mentor for 47 trainees). For this reason it may be wise to extend the criteria for the mentorship program, either include employees not yet retiring or include employees with sufficient work experience (i.e. X number of years with senior-level title).
+A total of 72,458 employees are eligible for retirement and hence will need to be filled. Of those retirement-eligible, a majority (70% or 50,842 of 72,458) of those employees hold senior-level titles indicating a significant talent depletion as this 'silver tsunami' hits. Based on the suggested criteria for the mentorship program, 1965 birth year, there are 1,549 current employees ready to mentor the next generation of employees. This is hardly a sufficient number of mentors to replenish the number of employees expected to leave, especially when considering the proportion of mentors:trainees per department as the following query shows:
 
-How many roles will need to be filled as the retirement wave begins to make an impact? Are there enough qualified, retirement-ready employees in departments to mentor the next generation of employees?
+```
+-- summary table of mentorship eligible grouped by titles
+SELECT COUNT(title) AS title_counts,
+	title
+FROM mentorship_eligibility
+GROUP BY title
+ORDER BY title_counts DESC;
+```
+![title_count_mentorship](https://user-images.githubusercontent.com/90335218/146687160-c0616ab9-13d7-4d0e-ad2e-ca33f03b3ac1.png)
+
+At best this represents:
+
+| Title | Trainees per Eligible Mentor |
+| --- | --- |
+| Senior Enginer | 49 |
+| Senior Staff | 170 |
+| Engineer | 49 |
+| Staff | 13 |
+| Technique Leader | 47 |
+| Assistant Engineer | 38 |
+
+With the current criteria for eligible mentors, there are no employees available to replace the 2 managers expected to retire.
+
+For this reason it may be wise to extend the criteria for the mentorship program, either include employees not yet retiring or include employees outsde the birth year criteria with sufficient work experience (i.e. X number of years with senior-level title):
+
+```
+-- 1. Extend birth year criteria (e.g. by 10 years) to include employees who are not yet retiring.
+SELECT DISTINCT ON (e.emp_no) e.emp_no,
+    e.first_name,
+    e.last_name,
+    e.birth_date,
+    de.from_date,
+    de.to_date,
+    titles.title
+-- INTO mentorship_eligibility
+FROM employees as e
+INNER JOIN dept_employees as de
+    ON e.emp_no = de.emp_no
+INNER JOIN titles 
+    ON de.emp_no = titles.emp_no
+WHERE de.to_date = '9999-01-01'
+AND (e.birth_date BETWEEN '1965-01-01' and '1975-12-31')
+ORDER BY emp_no ASC;
+
+```
+
+```
+-- 2. from all current employees, instead of those born in 1965, query those that hold Senior Engineer for, e.g. the last 20 years.
+SELECT DISTINCT ON (ce.emp_no) ce.emp_no,
+	ce.first_name,
+	ce.last_name,
+	titles.title,
+	titles.from_date,
+	titles.to_date
+FROM current_emp as ce
+INNER JOIN titles
+ON (ce.emp_no = titles.emp_no)
+WHERE titles.title = 'Senior Engineer'
+AND titles.from_date BETWEEN '2000-01-01' AND '9999-01-01';
+```
