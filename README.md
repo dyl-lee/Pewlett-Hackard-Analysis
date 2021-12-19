@@ -28,7 +28,7 @@ An employee database of a large company was built from flat-file using SQL and s
 ![retiring_titles](https://user-images.githubusercontent.com/90335218/146656299-f7fb61f2-5f7e-47a3-8d82-225b625b2064.png)
 
 * Senior Engineers and Senior Staff comprising a combined 70% (50,842) of all eligible for retirement.
-* 1,549 current employees (with birth years as early as 1965) are eligible for the mentorship program.
+* 1,549 current employees (with 1965 birth year) are eligible for the mentorship program.
 
 ## Summary and future directions
 A total of 72,458 employees are eligible for retirement and hence will need to be filled. Of those retirement-eligible, a majority (70% or 50,842 of 72,458) of those employees hold senior-level titles indicating a significant talent depletion as this 'silver tsunami' hits. Based on the suggested criteria for the mentorship program, 1965 birth year, there are 1,549 current employees ready to mentor the next generation of employees. This is hardly a sufficient number of mentors to replenish the number of employees expected to leave, especially when considering the proportion of mentors:trainees per department as the following query shows:
