@@ -43,7 +43,7 @@ ORDER BY title_counts DESC;
 ```
 ![title_count_mentorship](https://user-images.githubusercontent.com/90335218/146687160-c0616ab9-13d7-4d0e-ad2e-ca33f03b3ac1.png)
 
-At best this represents:
+The following table represents how many trainees each eligible mentors could be responsible for in order to replenish the numbers Pewlett-Hackard expect to lose to the 'silver tsunami':
 
 | Title | Trainees per Eligible Mentor |
 | --- | --- |
@@ -79,7 +79,7 @@ ORDER BY emp_no ASC;
 ```
 
 ```
--- 2. from all current employees, instead of those born in 1965, query those that hold Senior Engineer for, e.g. the last 20 years.
+-- 2. from the list of all current employees, instead of those born in 1965, query those that hold Senior Engineer for, e.g. the last 20 years.
 SELECT DISTINCT ON (ce.emp_no) ce.emp_no,
 	ce.first_name,
 	ce.last_name,
