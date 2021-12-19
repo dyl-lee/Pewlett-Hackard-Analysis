@@ -76,7 +76,6 @@ INNER JOIN titles
 WHERE de.to_date = '9999-01-01'
 AND (e.birth_date BETWEEN '1965-01-01' and '1975-12-31')
 ORDER BY emp_no ASC;
-
 ```
 
 ```
