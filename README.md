@@ -23,8 +23,10 @@ An employee database of a large company was built from flat-file using SQL and s
 ## Results
 ### Highlights
 * 72,458 currently employed at Pewlett-Hackard are eligible for retirement.
-* The breakdown for each (most recent) title is summarized in the table below 
+* The breakdown for each (most recent) title is summarized in the table below:
+
 ![retiring_titles](https://user-images.githubusercontent.com/90335218/146656299-f7fb61f2-5f7e-47a3-8d82-225b625b2064.png)
+
 * Senior Engineers and Senior Staff comprising a combined 70% (50,842) of all eligible for retirement.
 * 1,549 current employees (with birth years as early as 1965) are eligible for the mentorship program.
 
